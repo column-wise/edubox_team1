@@ -1,9 +1,18 @@
 package com.gamja.edubox_team1.course.model.dto;
 
+import com.gamja.edubox_team1.course.model.entity.Hashtag;
+import com.gamja.edubox_team1.course.model.entity.Lecture;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
-public class CourseSummaryResponseDTO {
+public class CourseDetailResponseDTO {
 
     private long id;
 
@@ -15,11 +24,15 @@ public class CourseSummaryResponseDTO {
 
     private String creatorName;
 
-    private List<Integer> hashtagIds;
+    private String imgURL;
 
-    private List<String> hashtagTitles;
+    private List<Hashtag> hashtags;
 
     private int likes;
+
+    private double rating;
+
+    private long reiewCount;
 
     private LocalDateTime createdAt;
 
@@ -32,4 +45,6 @@ public class CourseSummaryResponseDTO {
     private String saleName;
 
     private int students;
+
+    private List<Lecture> lectures;
 }

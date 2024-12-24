@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "courses")
@@ -12,7 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 public class Course {
 
-    @id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
@@ -22,8 +24,19 @@ public class Course {
     @Column(nullable = false)
     private long creator_id;
 
+    @Column
+    private String imgURL;
+
     @Column(nullable = false)
     private String description;
+
+    @Column
+    // BigDecimal: JPA에서 DECIMAL과 가장 호환성이 좋지만
+    // 평점은 정밀도가 부족해도 상관 없어서 double 사용
+    private double rating;
+    
+    @Column
+    private long reviewCount;
 
     @Column(nullable = false)
     private int likes;
@@ -32,35 +45,17 @@ public class Course {
     private Timestamp createdAt;
 
     @Column(nullable = false)
+    private int categoryId;
+
+    @Column(nullable = false)
     private int price;
 
     @Column
-    private long saleId;
+    private Long saleId;  // saleId는 null일 수 있으므로 Long 사용
 
     @Column(nullable = false)
     private long students;
 
-    @JoinTable(
-            name = "course_hashtags", // 중간 테이블 이름
-            joinColumns = @JoinColumn(name = "course_id"), // 현재 엔터티와 연결된 컬럼
-            inverseJoinColumns = @JoinColumn(name = "hashtag_id") // 반대 엔터티와 연결된 컬럼
-    )
-    private List<Hashtag> hashtags;
-}
-
-@Entity
-@Table(name = "hashtags")
-@Getter
-@Setter
-public class Hashtag {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
     @Column(nullable = false)
-    private String title;
-
-    @ManyToMany(mappedBy = "hashtags") // 반대편의 관계 매핑
-    private List<Course> courses;
+    private int lectures; // 강의 수
 }
